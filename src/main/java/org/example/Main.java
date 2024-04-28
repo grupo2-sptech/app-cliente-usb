@@ -33,8 +33,8 @@ public class Main {
         Boolean maquinaCadastrada = false;
         List<String> processosBloqueados = new ArrayList<>();
 
-        List<DispositivoUsb> HistoricodeUSB = new ArrayList<>();
-        HistoricodeUSB = looca.getDispositivosUsbGrupo().getDispositivosUsb();
+//        List<DispositivoUsb> HistoricodeUSB = new ArrayList<>();
+//        HistoricodeUSB = looca.getDispositivosUsbGrupo().getDispositivosUsb();
 
         limparConsole();
         utils.exibirLogo();
@@ -42,10 +42,6 @@ public class Main {
         utils.exibirMensagem();
 
         conn = DB.getConection();
-
-
-
-
 
 
 
@@ -212,6 +208,7 @@ public class Main {
                     idproduto = dispositivoDaVez.getIdProduto();
                     fornecedor = dispositivoDaVez.getForncecedor();
                     idfornecedor = dispositivoDaVez.getIdFornecedor();
+
 
                     String sqlDispositivosConectados = """
                                 insert into dispositivos_conectados (nome_dispositivo, id_produto, nome_fornecedor, id_fornecedor, date_hora, fk_maquina) values
