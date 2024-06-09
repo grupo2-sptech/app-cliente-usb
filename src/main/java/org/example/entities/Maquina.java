@@ -142,31 +142,67 @@ public class Maquina {
         usb1 = daoRegistro.buscarDispositivoUsb(usb.getIdproduto(), maquina.getId());
 
 
-        System.out.println("Total de dispositivos conectados");
-        System.out.println(looca.getDispositivosUsbGrupo().getTotalDispositvosUsbConectados());
-        System.out.println("________________________________________________");
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println(usb1);
+        System.out.println("""
+                        _________________________________________
+                        | Digite 1 para informações sobre USB,  |
+                        |  2 para informações de bateria,       |
+                        |  ou 3 para todas as informações.      |
+                        |_______________________________________|
+                """);
 
-        SystemInfo si = new SystemInfo();
-        HardwareAbstractionLayer hal = si.getHardware();
-        List<PowerSource> powerSources = hal.getPowerSources();
+        int Input = scanner.nextInt();
 
+        if (Input == 1) {
+            System.out.println("Total de dispositivos conectados");
+            System.out.println(looca.getDispositivosUsbGrupo().getTotalDispositvosUsbConectados());
+            System.out.println("________________________________________________");
+            System.out.println(usb1);
+        } else if (Input == 2) {
+            SystemInfo si = new SystemInfo();
+            HardwareAbstractionLayer hal = si.getHardware();
+            List<PowerSource> powerSources = hal.getPowerSources();
 
-        for (PowerSource powerSource : powerSources) {
-            double batteryPercentage = powerSource.getRemainingCapacityPercent() * 100;
-            boolean isCharging = powerSource.isCharging();
+            for (PowerSource powerSource : powerSources) {
+                double batteryPercentage = powerSource.getRemainingCapacityPercent() * 100;
+                boolean isCharging = powerSource.isCharging();
 
-            String chargingStatus = isCharging ? "Sim" : "Não";
+                String chargingStatus = isCharging ? "Sim" : "Não";
 
-            System.out.println("Porcentagem da bateria: " + String.format("%.0f", batteryPercentage) + "%");
-            System.out.println("Carregando: " + chargingStatus);
+                System.out.println("Porcentagem da bateria: " + String.format("%.0f", batteryPercentage) + "%");
+                System.out.println("Carregando: " + chargingStatus);
 
-            if (batteryPercentage < 20 && !isCharging) {
-                System.out.println("A bateria está abaixo de 20%. Por favor, conecte o computador à tomada.");
+                if (batteryPercentage < 20 && !isCharging) {
+                    System.out.println("A bateria está abaixo de 20%. Por favor, conecte o computador à tomada.");
+                }
             }
-        }
+        } else if (Input == 3) {
+            System.out.println("Total de dispositivos conectados");
+            System.out.println(looca.getDispositivosUsbGrupo().getTotalDispositvosUsbConectados());
+            System.out.println("________________________________________________");
+            System.out.println(usb1);
 
+            SystemInfo siAll = new SystemInfo();
+            HardwareAbstractionLayer halAll = siAll.getHardware();
+            List<PowerSource> powerSourcesAll = halAll.getPowerSources();
+
+            for (PowerSource powerSource : powerSourcesAll) {
+                double batteryPercentage = powerSource.getRemainingCapacityPercent() * 100;
+                boolean isCharging = powerSource.isCharging();
+
+                String chargingStatus = isCharging ? "Sim" : "Não";
+
+                System.out.println("Porcentagem da bateria: " + String.format("%.0f", batteryPercentage) + "%");
+                System.out.println("Carregando: " + chargingStatus);
+
+                if (batteryPercentage < 20 && !isCharging) {
+                    System.out.println("A bateria está abaixo de 20%. Por favor, conecte o computador à tomada.");
+                }
+            }
+        } else {
+            System.out.println("Opção inválida.");
+        }
 
         Thread monitoramentoThread = new Thread(new Runnable() {
             @Override
